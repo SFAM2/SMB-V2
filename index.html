@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Say My Brand — Ambassador Marketing Platform</title>
+  <meta name="description" content="The all-in-one platform to recruit, activate, and measure your brand ambassadors. Turn your community into your best sales channel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'OktaNeue';
+      src: url('assets/OktaNeue-Heavy.ttf') format('truetype');
+      font-weight: 900; font-style: normal;
+    }
+    @font-face {
+      font-family: 'OktaNeue';
+      src: url('assets/OktaNeue-Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal;
+    }
+    @font-face {
+      font-family: 'OktaNeue';
+      src: url('assets/oktaneue-blackitalic.otf') format('opentype');
+      font-weight: 900; font-style: italic;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --lime: #ccff00;
+      --lime-dim: rgba(204,255,0,0.07);
+      --lime-border: rgba(204,255,0,0.18);
+      --dark: #0a0a0a;
+      --dark-2: #111111;
+      --dark-3: #181818;
+      --light: #efefef;
+      --border: rgba(255,255,255,0.07);
+      --muted: rgba(255,255,255,0.5);
+      --font-d: 'OktaNeue', 'Work Sans', sans-serif;
+      --font-b: 'Work Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-b);
+      background: #fff;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+      padding: 0 6rem;
+    }
+
+    .pw {
+      max-width: 1500px;
+      margin: 0 auto;
+      background: var(--dark);
+      overflow: clip;
+    }
+
+    #sp {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: var(--lime);
+      z-index: 9999;
+      transition: width 0.08s linear;
+    }
+
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; }
+
+    .gbg { position: relative; }
+    .gbg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-b); font-weight: 600; font-size: .9rem;
+      padding: .7rem 1.6rem; border-radius: 0;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all .22s ease; position: relative; overflow: hidden;
+    }
+    .btn-lime { background: var(--lime); color: #000; }
+    .btn-lime:hover { background: #d4ff00; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(204,255,0,.3); }
+    .btn-ghost { background: transparent; color: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.14); }
+    .btn-ghost:hover { color: #fff; border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.05); }
+    .btn-ghost-dark { background: transparent; color: rgba(0,0,0,.65); border: 1px solid rgba(0,0,0,.15); }
+    .btn-ghost-dark:hover { color: #000; border-color: rgba(0,0,0,.3); background: rgba(0,0,0,.05); }
+    .btn-lg { padding: 1rem 2.4rem; font-size: 1rem; }
+    .btn svg { transition: transform .28s ease; }
+    .btn:hover svg { transform: translateX(4px); }
+    .btn-dark {
+      background: #000; color: #e5ff00;
+      font-family: var(--font-b); font-size: .88rem; font-weight: 700;
+      padding: .7rem 1.75rem; border-radius: 0; border: none;
+      text-decoration: none; display: inline-flex; align-items: center; gap: .45rem;
+      transition: background .2s ease; cursor: pointer;
+    }
+    .btn-dark:hover { background: #1a1a1a; }
+    .btn-dark.btn-lg { padding: .9rem 2.25rem; font-size: .95rem; }
+
+    /* ===== TAG ===== */
+    .tag {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: monospace; font-size: .68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em;
+      padding: .3rem .8rem; border-radius: 0;
+      margin-bottom: 1.5rem;
+    }
+    .tag-lime { color: var(--lime); background: var(--lime-dim); border: 1px solid var(--lime-border); }
+    .tag-dark { color: rgba(0,0,0,.45); background: rgba(0,0,0,.06); border: 1px solid rgba(0,0,0,.1); }
+
+    /* ===== SECTION TITLES ===== */
+    .st {
+      font-family: var(--font-d); font-weight: 900;
+      font-size: clamp(2.2rem, 4.5vw, 3.75rem);
+      letter-spacing: -.03em; line-height: 1.02;
+    }
+    .st-dark { color: #000; }
+
+    /* ===== ACCENT COLOR — FIX ===== */
+    /* Default: lime (for dark-background sections) */
+    .acc {
+      color: var(--lime);
+      -webkit-text-fill-color: var(--lime);
+      font-style: italic;
+    }
+    /* On light-background sections (.st-dark): black */
+    .st-dark .acc {
+      color: #000;
+      -webkit-text-fill-color: #000;
+      font-style: italic;
+    }
+    /* Hero h1 on lime background: black */
+    .hero-h1 .acc {
+      color: #000;
+      -webkit-text-fill-color: #000;
+      font-style: italic;
+    }
+    /* CTA heading stays lime (dark bg) */
+    .cta-h .acc {
+      color: var(--lime);
+      -webkit-text-fill-color: var(--lime);
+      font-style: italic;
+    }
+
+    .ss { font-size: 1.05rem; color: var(--muted); font-weight: 300; line-height: 1.75; margin-top: 1.1rem; }
+    .ss-dark { color: rgba(0,0,0,.5); }
+
+    /* ===== REVEAL ===== */
+    .rv { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .rv.on { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      padding: .9rem 2.5rem;
+      background: rgba(10,10,10,.88);
+      backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-in {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    }
+    .nav-logo img { height: 34px; display: block; }
+    .nav-pill {
+      display: flex; align-items: center; gap: .2rem;
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: 0; padding: .3rem .4rem;
+    }
+    .nav-pill a {
+      text-decoration: none; color: rgba(255,255,255,.6);
+      font-size: .85rem; font-weight: 500;
+      padding: .38rem 1rem; border-radius: 0;
+      transition: all .18s;
+    }
+    .nav-pill a:hover { color: #fff; background: rgba(255,255,255,.07); }
+    .nav-right { display: flex; align-items: center; gap: .75rem; }
+    .nav-live {
+      display: flex; align-items: center; gap: .45rem;
+      font-family: monospace; font-size: .67rem;
+      color: var(--lime); text-transform: uppercase; letter-spacing: .1em;
+    }
+    .nav-dot {
+      width: 6px; height: 6px; border-radius: 0;
+      background: var(--lime);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .nav-mob { display: none; background: none; border: 1px solid var(--border); border-radius: 0; padding: .45rem; cursor: pointer; color: #fff; }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 7rem 2.5rem 5rem;
+      background-color: #e5ff00;
+      background-image: url(https://saymybrand.com/wp-content/uploads/2024/06/bg-shape.webp);
+      background-position: top right;
+      background-repeat: no-repeat;
+    }
+
+    .hero-in {
+      max-width: 1280px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 7fr 5fr;
+      gap: 4rem; align-items: center; position: relative; z-index: 1;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: monospace; font-size: .68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em;
+      color: #000; background: rgba(0,0,0,.1);
+      border: 1px solid rgba(0,0,0,.2);
+      padding: .3rem .8rem; border-radius: 0;
+      margin-bottom: 1.75rem;
+    }
+    .hero-h1 {
+      font-family: var(--font-d); font-weight: 900;
+      font-size: clamp(3.2rem, 6.5vw, 7rem);
+      line-height: .92; letter-spacing: -.035em; color: #000;
+      margin-bottom: 1.75rem;
+    }
+    /* Typewriter cursor only — no sparkles */
+    .typed-cursor {
+      font-style: normal;
+      font-weight: 900;
+      animation: cur-blink 0.65s step-end infinite;
+      margin-left: 2px;
+    }
+    @keyframes cur-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Hero subtitle — FIX: stronger contrast on lime bg */
+    .hero-sub {
+      font-size: 1.12rem; color: rgba(0,0,0,.82);
+      font-weight: 500; line-height: 1.72;
+      max-width: 560px; margin-bottom: 2.5rem;
+    }
+    .hero-acts { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin-bottom: 3rem; }
+
+    /* Hero visual */
+    .hero-vis { position: relative; }
+    .hero-card {
+      background: var(--dark-2);
+      border-radius: 0;
+      position: relative;
+    }
+    .hero-card img, .hero-card video { width: 100%; display: block; }
+
+    /* ============================================================
+       LOGOS MARQUEE
+    ============================================================ */
+    #logos {
+      background: var(--dark-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 0;
+      position: relative; overflow: hidden;
+    }
+    .logos-label {
+      text-align: center;
+      font-family: monospace; font-size: .67rem;
+      text-transform: uppercase; letter-spacing: .18em;
+      color: rgba(255,255,255,.28);
+      margin-bottom: 2rem;
+      position: relative; z-index: 1;
+    }
+    .logos-marquee-wrap {
+      position: relative; overflow: hidden;
+    }
+    .logos-marquee-track {
+      display: flex; gap: 0;
+      animation: logoScroll 28s linear infinite;
+      width: max-content;
+    }
+    .logos-marquee-wrap:hover .logos-marquee-track { animation-play-state: paused; }
+    @keyframes logoScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .logo-item {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 3rem;
+      border-right: 1px solid rgba(255,255,255,.06);
+      flex-shrink: 0;
+      height: 56px;
+    }
+    .logo-item img {
+      height: 28px; max-width: 120px;
+      object-fit: contain;
+      filter: invert(1) brightness(.6);
+      transition: filter .28s ease, transform .28s ease;
+    }
+    .logo-item:hover img {
+      filter: invert(1) brightness(1);
+      transform: scale(1.07);
+    }
+    /* Fade edges */
+    .logos-fade-l, .logos-fade-r {
+      position: absolute; top: 0; height: 100%; width: 140px;
+      pointer-events: none; z-index: 2;
+    }
+    .logos-fade-l { left: 0; background: linear-gradient(to right, var(--dark-2) 20%, transparent); }
+    .logos-fade-r { right: 0; background: linear-gradient(to left, var(--dark-2) 20%, transparent); }
+
+    /* ============================================================
+       BEFORE / AFTER
+    ============================================================ */
+    #problem {
+      background: var(--light); padding: 7rem 2.5rem;
+      position: relative;
+    }
+    .prob-in { max-width: 1280px; margin: 0 auto; }
+    .prob-hd { text-align: center; margin-bottom: 4rem; }
+    .prob-hd p { margin-top: .9rem; font-size: 1.02rem; color: rgba(0,0,0,.48); }
+    .prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .prob-card { border-radius: 0; padding: 2.5rem; }
+    .prob-bad { background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.08); }
+    .prob-good { background: #000; border: 1px solid rgba(255,255,255,.06); }
+    .prob-cl {
+      font-family: monospace; font-size: .68rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em;
+      display: flex; align-items: center; gap: .5rem; margin-bottom: 1.75rem;
+    }
+    .cl-bad { color: rgba(0,0,0,.38); }
+    .cl-good { color: var(--lime); }
+    .prob-ct {
+      font-family: var(--font-d); font-weight: 900; font-size: 1.7rem;
+      letter-spacing: -.02em; line-height: 1.15; margin-bottom: 2rem;
+    }
+    .ct-bad { color: rgba(0,0,0,.65); }
+    .ct-good { color: #fff; }
+    .prob-list { list-style: none; display: flex; flex-direction: column; gap: .9rem; }
+    .prob-list li { display: flex; align-items: flex-start; gap: .75rem; font-size: .95rem; line-height: 1.55; }
+    .li-bad { color: rgba(0,0,0,.52); }
+    .li-good { color: rgba(255,255,255,.82); }
+    .ic { flex-shrink: 0; width: 20px; height: 20px; margin-top: 2px; }
+
+    /* ============================================================
+       SOLUTION — 3-in-1
+    ============================================================ */
+    #solution {
+      background: var(--dark); padding: 7rem 2.5rem;
+      position: relative;
+    }
+    .sol-in { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    .sol-hd { max-width: 680px; margin-bottom: 4rem; }
+
+    /* Bento */
+    .bento {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem;
+    }
+    .bc {
+      background: var(--dark-2); border: 1px solid var(--border);
+      border-radius: 0; overflow: hidden;
+      transition: border-color .28s;
+    }
+    .bc:hover { border-color: rgba(204,255,0,.25); }
+    .bc-span2 { grid-column: span 2; }
+    .bc-body { padding: 2rem 2rem 0; }
+    .bc-icon {
+      width: 46px; height: 46px;
+      background: var(--lime-dim); border: 1px solid var(--lime-border);
+      border-radius: 0; display: flex; align-items: center; justify-content: center;
+      color: var(--lime); margin-bottom: 1.2rem;
+    }
+    .bc-t {
+      font-family: var(--font-d); font-weight: 900; font-size: 1.3rem;
+      letter-spacing: -.02em; margin-bottom: .6rem;
+    }
+    .bc-d { font-size: .88rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.5rem; }
+    .bc-img { border-top: 1px solid var(--border); }
+    .bc-img img { width: 100%; display: block; }
+    .bc-stat {
+      font-family: var(--font-d); font-weight: 900;
+      font-size: 3.75rem; color: var(--lime);
+      letter-spacing: -.04em; line-height: 1; margin-bottom: .25rem;
+    }
+    .bc-stat-l {
+      font-family: monospace; font-size: .68rem;
+      text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.38);
+    }
+
+    /* Ambassador Boutique — 2-column split (FIX) */
+    .bc-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+    .bc-split .bc-body {
+      padding: 2.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid var(--border);
+    }
+    .bc-split .bc-img {
+      border-top: none;
+      overflow: hidden;
+      min-height: 280px;
+    }
+    .bc-split .bc-img img {
+      width: 100%; height: 100%;
+      object-fit: contain; object-position: center;
+      display: block;
+      background: var(--dark-2);
+    }
+
+    /* ============================================================
+       FEATURES BENTO
+    ============================================================ */
+    #features {
+      background: var(--light);
+      margin-top: -2.5rem;
+      padding: 7rem 2.5rem;
+      position: relative; z-index: 2;
+    }
+    .feat-in { max-width: 1280px; margin: 0 auto; }
+    .feat-hd { text-align: center; margin-bottom: 4rem; }
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(12,1fr);
+      gap: 1.25rem;
+    }
+    .fc {
+      background: #fff; border: 1px solid rgba(0,0,0,.08);
+      border-radius: 0; padding: 2rem;
+      transition: all .28s ease;
+    }
+    .fc:hover { border-color: rgba(0,0,0,.16); box-shadow: 0 8px 40px rgba(0,0,0,.07); transform: translateY(-2px); }
+    .fc-wide { grid-column: span 8; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+    .fc-30 { grid-column: span 4; }
+    .fc-25 { grid-column: span 3; }
+    .fc-icon {
+      width: 42px; height: 42px; background: #000; border-radius: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--lime); margin-bottom: 1rem;
+    }
+    .fc-t { font-family: var(--font-d); font-weight: 900; font-size: 1.1rem; letter-spacing: -.02em; color: #000; margin-bottom: .45rem; }
+    .fc-d { font-size: .85rem; color: rgba(0,0,0,.48); line-height: 1.6; }
+    .fc-big { font-family: var(--font-d); font-weight: 900; font-size: 3.5rem; color: #000; letter-spacing: -.04em; line-height: 1; margin-bottom: .2rem; }
+    .fc-bigl { font-family: monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: #166534; }
+    .fc-img img { width: 100%; border-radius: 0; }
+
+    /* ============================================================
+       INTEGRATIONS
+    ============================================================ */
+    #integrations {
+      background: var(--dark); padding: 7rem 2.5rem;
+      position: relative;
+    }
+    .int-in { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    .int-hd { text-align: center; margin-bottom: 4rem; }
+    .int-scroll-wrap {
+      position: relative; overflow: hidden;
+      padding: .5rem 0 1rem;
+    }
+    .int-scroll-row {
+      display: flex; gap: 1.25rem;
+      white-space: nowrap; will-change: transform;
+    }
+    .int-scroll-row + .int-scroll-row { margin-top: 1.25rem; }
+    .int-scroll-row-1 { animation: intL 38s linear infinite; }
+    .int-scroll-row-2 { animation: intR 38s linear infinite; }
+    @keyframes intL { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    @keyframes intR { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+    .int-scroll-wrap:hover .int-scroll-row-1,
+    .int-scroll-wrap:hover .int-scroll-row-2 { animation-play-state: paused; }
+    .int-icon {
+      flex-shrink: 0;
+      width: 64px; height: 64px; border-radius: 0;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.08);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .int-icon:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.6), 0 0 0 2px rgba(204,255,0,.35); }
+    .int-icon img { width: 36px; height: 36px; object-fit: contain; }
+    .int-fade-l, .int-fade-r {
+      position: absolute; top: 0; height: 100%; width: 120px;
+      pointer-events: none; z-index: 2;
+    }
+    .int-fade-l { left: 0; background: linear-gradient(to right, #0a0a0a 30%, transparent); }
+    .int-fade-r { right: 0; background: linear-gradient(to left, #0a0a0a 30%, transparent); }
+    .int-note { text-align: center; margin-top: 3.5rem; font-size: .88rem; color: var(--muted); }
+    .int-note a { color: var(--lime); text-decoration: none; }
+    .int-note a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    #testi {
+      background: var(--dark); padding: 7rem 2.5rem;
+      position: relative;
+    }
+    .tes-in { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    .tes-hd { text-align: center; margin-bottom: 4rem; }
+    .tes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+    .tc {
+      background: var(--dark-2); border: 1px solid var(--border);
+      border-radius: 0; padding: 2rem; transition: border-color .28s;
+    }
+    .tc:hover { border-color: rgba(204,255,0,.18); }
+    .tc-stars { display: flex; gap: 3px; margin-bottom: 1.2rem; color: var(--lime); }
+    .tc-q { font-size: .97rem; line-height: 1.68; color: rgba(255,255,255,.75); margin-bottom: 1.75rem; }
+    .tc-auth { display: flex; align-items: center; gap: .75rem; }
+    .tc-av {
+      width: 40px; height: 40px; border-radius: 0;
+      background: var(--lime-dim); border: 1px solid var(--lime-border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-weight: 900; font-size: .88rem; color: var(--lime);
+      flex-shrink: 0;
+    }
+    .tc-n { font-weight: 600; font-size: .88rem; }
+    .tc-r { font-size: .73rem; color: rgba(255,255,255,.38); }
+
+    /* ============================================================
+       PRICING
+    ============================================================ */
+    #pricing {
+      background: var(--dark); padding: 7rem 2.5rem;
+      position: relative;
+    }
+    .pr-in { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    .pr-hd { text-align: center; margin-bottom: 4rem; }
+    .pr-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+    .pc {
+      background: var(--dark-2); border: 1px solid var(--border);
+      border-radius: 0; padding: 2.5rem;
+      transition: all .28s; position: relative;
+    }
+    .pc:hover { border-color: rgba(204,255,0,.2); transform: translateY(-4px); }
+    .pc-feat { border-color: rgba(204,255,0,.35); background: var(--dark-3); }
+    .pc-badge {
+      position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+      background: var(--lime); color: #000;
+      font-family: monospace; font-size: .62rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      padding: .28rem 1rem; border-radius: 0;
+    }
+    .pc-tier { font-family: monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--lime); margin-bottom: .4rem; }
+    .pc-name { font-family: var(--font-d); font-weight: 900; font-size: 1.75rem; letter-spacing: -.02em; margin-bottom: .4rem; }
+    .pc-desc { font-size: .85rem; color: var(--muted); line-height: 1.62; margin-bottom: 2rem; }
+    .pc-list { list-style: none; display: flex; flex-direction: column; gap: .72rem; margin-bottom: 2.5rem; }
+    .pc-list li { display: flex; align-items: flex-start; gap: .6rem; font-size: .85rem; color: rgba(255,255,255,.65); }
+    .pc-list li svg { flex-shrink: 0; margin-top: 2px; }
+
+    /* ============================================================
+       FINAL CTA
+    ============================================================ */
+    #cta {
+      background: var(--dark); padding: 8rem 2.5rem;
+      position: relative; text-align: center;
+    }
+    .cta-glow {
+      position: absolute; width: 900px; height: 450px;
+      background: var(--lime); border-radius: 0;
+      filter: blur(220px); opacity: .055;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    .cta-in { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+    .cta-h {
+      font-family: var(--font-d); font-weight: 900;
+      font-size: clamp(2.75rem, 5.5vw, 5.5rem);
+      letter-spacing: -.035em; line-height: .93; color: #fff; margin-bottom: 1.5rem;
+    }
+    .cta-s { font-size: 1.08rem; color: var(--muted); margin-bottom: 3rem; line-height: 1.65; }
+    .cta-acts { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    /* ============================================================
+       FAQ
+    ============================================================ */
+    #faq {
+      background: var(--light);
+      margin-top: -2.5rem;
+      padding: 7rem 2.5rem;
+      position: relative; z-index: 2;
+    }
+    .faq-in { max-width: 860px; margin: 0 auto; }
+    .faq-hd { text-align: center; margin-bottom: 4rem; }
+    .faq-list { display: flex; flex-direction: column; gap: .75rem; }
+    .fq {
+      background: #fff; border: 1px solid rgba(0,0,0,.08);
+      border-radius: 0; overflow: hidden;
+      transition: border-color .22s;
+    }
+    .fq.open { border-color: rgba(0,0,0,.15); }
+    .fq-q {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: 1.5rem 1.75rem;
+      font-family: var(--font-d); font-weight: 700; font-size: 1rem;
+      letter-spacing: -.01em; color: #000; text-align: left;
+    }
+    .fq-icon {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 0;
+      background: rgba(0,0,0,.06); border: 1px solid rgba(0,0,0,.1);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .28s, background .22s;
+    }
+    .fq.open .fq-icon { background: #000; transform: rotate(45deg); }
+    .fq.open .fq-icon svg { color: var(--lime); }
+    .fq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .3s; }
+    .fq.open .fq-a { max-height: 300px; }
+    .fq-a-inner { padding: 0 1.75rem 1.5rem; font-size: .9rem; line-height: 1.72; color: rgba(0,0,0,.55); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--dark); border-top: 1px solid var(--border);
+      padding: 5rem 2.5rem 3rem; position: relative;
+    }
+    .ft-ghost {
+      position: absolute; bottom: -1rem; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-d); font-weight: 900;
+      font-size: clamp(4rem,14vw,15rem);
+      color: rgba(255,255,255,.035); white-space: nowrap;
+      pointer-events: none; letter-spacing: -.06em; line-height: 1; user-select: none;
+    }
+    .ft-in { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    .ft-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+    .ft-logo img { height: 32px; margin-bottom: 1rem; }
+    .ft-tag { font-size: .85rem; color: rgba(255,255,255,.38); line-height: 1.7; max-width: 260px; }
+    .ft-col-t { font-family: monospace; font-size: .67rem; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,255,255,.35); margin-bottom: 1.2rem; }
+    .ft-links { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .ft-links a { text-decoration: none; color: rgba(255,255,255,.52); font-size: .85rem; transition: color .18s; }
+    .ft-links a:hover { color: var(--lime); }
+    .ft-bot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .ft-legal { font-size: .73rem; color: rgba(255,255,255,.28); }
+    .ft-soc { display: flex; gap: .75rem; }
+    .soc-a {
+      width: 36px; height: 36px; border-radius: 0;
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.38); text-decoration: none; transition: all .2s;
+    }
+    .soc-a:hover { background: var(--lime); border-color: var(--lime); color: #000; }
+
+    /* ============================================================
+       SECTION CORNER BRACKETS
+    ============================================================ */
+    section { position: relative; }
+    #logos::before { display: none; }
+    section::before, footer::before {
+      content: ''; position: absolute; inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, #000 0, #000 14px),
+        linear-gradient(to bottom, #000 0, #000 14px),
+        linear-gradient(to left, #000 0, #000 14px),
+        linear-gradient(to bottom, #000 0, #000 14px),
+        linear-gradient(to right, #000 0, #000 14px),
+        linear-gradient(to top, #000 0, #000 14px),
+        linear-gradient(to left, #000 0, #000 14px),
+        linear-gradient(to top, #000 0, #000 14px);
+      background-repeat: no-repeat;
+      background-size:
+        14px 2px, 2px 14px, 14px 2px, 2px 14px,
+        14px 2px, 2px 14px, 14px 2px, 2px 14px;
+      background-position:
+        top 14px left 14px, top 14px left 14px,
+        top 14px right 14px, top 14px right 14px,
+        bottom 14px left 14px, bottom 14px left 14px,
+        bottom 14px right 14px, bottom 14px right 14px;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width:1024px) {
+      .hero-in { grid-template-columns: 1fr; }
+      .hero-vis { display: none; }
+      .bento { grid-template-columns: repeat(2,1fr); }
+      .bc-span2 { grid-column: span 2; }
+      .bc-split { grid-template-columns: 1fr; }
+      .bc-split .bc-body { border-right: none; border-bottom: 1px solid var(--border); }
+      .feat-grid { grid-template-columns: repeat(12,1fr); }
+      .fc-wide { grid-column: span 12; }
+      .fc-30 { grid-column: span 6; }
+      .fc-25 { grid-column: span 6; }
+      .tes-grid { grid-template-columns: repeat(2,1fr); }
+      .tes-grid .tc:last-child { grid-column: span 2; }
+      .pr-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
+      .ft-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+    @media (max-width:768px) {
+      body { padding: 0; }
+      .pw { border-radius: 0; box-shadow: none; }
+      .nav-pill, .nav-live { display: none; }
+      .nav-mob { display: flex; }
+      .prob-grid, .bento, .tes-grid { grid-template-columns: 1fr; }
+      .bc-span2, .tes-grid .tc:last-child { grid-column: span 1; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .fc-wide, .fc-30, .fc-25 { grid-column: span 1; }
+      .fc-wide { grid-template-columns: 1fr; }
+      .ft-top { grid-template-columns: 1fr; }
+      .ft-bot { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="sp"></div>
+
+<div class="pw">
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#" style="text-decoration:none">
+      <img src="assets/footer-logo.png" alt="Say My Brand" style="height:34px;display:block"
+        onerror="this.style.display='none';document.getElementById('nltxt').style.display='block'">
+      <span id="nltxt" style="display:none;font-family:var(--font-d);font-weight:900;font-size:1.1rem;letter-spacing:-.02em;color:var(--lime)">SAY MY BRAND</span>
+    </a>
+
+    <div class="nav-pill">
+      <a href="#solution">Platform</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <div class="nav-right">
+      <a href="mailto:contact@saymybrand.com" class="btn btn-lime">Book Demo</a>
+    </div>
+
+    <button class="nav-mob" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero">
+  <div class="hero-in">
+    <div>
+
+
+      <h1 class="hero-h1 rv d1 on">
+        Turn<br>
+        <span class="acc"><span id="typed-word">Ambassadors</span><span class="typed-cursor">|</span></span><br>
+        Into Revenue.
+      </h1>
+
+      <p class="hero-sub rv d2 on">
+        Say My Brand unifies ambassador recruitment, activation, commissions, and analytics in one powerful platform — so your brand grows through the people who genuinely love it.
+      </p>
+
+      <div class="hero-acts rv d3 on">
+        <a href="mailto:contact@saymybrand.com" class="btn btn-dark btn-lg">
+          Book a Demo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+        </a>
+        <a href="#solution" class="btn btn-ghost-dark btn-lg">See How It Works</a>
+      </div>
+    </div>
+
+    <div class="hero-vis rv d2 on">
+      <div class="hero-card">
+        <video autoplay muted loop playsinline>
+          <source src="assets/v3.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LOGOS MARQUEE
+============================================================ -->
+<section id="logos">
+  <div class="logos-marquee-wrap">
+    <div class="logos-marquee-track">
+      <!-- Set 1 -->
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/68dc3b7edb08368a31a5a532_paalm.png" alt="Paalm"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/63f4832df8f1ed0b3382c23e_637cf78276ee4ce3fe4667ab_Culture_Convenience_Club_(CCC)_logo%201.png" alt="CCC"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4c57264667b1_pngfind%201.png" alt="Brand"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4c4ff04667b0_169000176_logo_202121684642600%201.png" alt="Brand"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4ccc6a4667af_calvin-klein-1%201.png" alt="Calvin Klein"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4c69c94667ae_sephora-logo%201.png" alt="Sephora"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4cfdc84667ad_la-redoute-1%201.png" alt="La Redoute"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4c30344667ac_image%208.png" alt="Brand"></div>
+      <!-- Set 2 — duplicate for seamless loop -->
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/68dc3b7edb08368a31a5a532_paalm.png" alt="Paalm"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/63f4832df8f1ed0b3382c23e_637cf78276ee4ce3fe4667ab_Culture_Convenience_Club_(CCC)_logo%201.png" alt="CCC"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4c57264667b1_pngfind%201.png" alt="Brand"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4c4ff04667b0_169000176_logo_202121684642600%201.png" alt="Brand"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4ccc6a4667af_calvin-klein-1%201.png" alt="Calvin Klein"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4c69c94667ae_sephora-logo%201.png" alt="Sephora"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4cfdc84667ad_la-redoute-1%201.png" alt="La Redoute"></div>
+      <div class="logo-item"><img src="https://cdn.prod.website-files.com/637cf78276ee4cb6b846679e/637cf78276ee4c30344667ac_image%208.png" alt="Brand"></div>
+    </div>
+    <div class="logos-fade-l"></div>
+    <div class="logos-fade-r"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BEFORE / AFTER
+============================================================ -->
+<section id="problem">
+  <div class="prob-in">
+    <div class="prob-hd rv on">
+      <h2 class="st st-dark">Most ambassador programs<br>fail. Here's why.</h2>
+      <p>Without the right infrastructure, ambassadors go inactive, ROI is invisible, and teams waste time on admin.</p>
+    </div>
+
+    <div class="prob-grid">
+      <div class="prob-card prob-bad rv on">
+        <div class="prob-cl cl-bad">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          The Old Way
+        </div>
+        <h3 class="prob-ct ct-bad">Fragmented tools,<br>invisible results.</h3>
+        <ul class="prob-list">
+          <li class="li-bad">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            Spreadsheets and manual tracking for every ambassador
+          </li>
+          <li class="li-bad">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            No attribution — you never know what's actually driving sales
+          </li>
+          <li class="li-bad">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            Ambassadors go inactive within weeks — no engagement loop
+          </li>
+          <li class="li-bad">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            Marketing, sales, and ops siloed — no shared visibility
+          </li>
+          <li class="li-bad">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            Commission management is error-prone and takes days
+          </li>
+        </ul>
+      </div>
+
+      <div class="prob-card prob-good rv d1 on">
+        <div class="prob-cl cl-good">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          With Say My Brand
+        </div>
+        <h3 class="prob-ct ct-good">One platform,<br>every lever.</h3>
+        <ul class="prob-list">
+          <li class="li-good">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>
+            Real-time dashboard — every ambassador, every action, one view
+          </li>
+          <li class="li-good">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>
+            Full attribution from ambassador to sale — measurable, provable ROI
+          </li>
+          <li class="li-good">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>
+            Loyalty system and branded boutique keeps ambassadors active
+          </li>
+          <li class="li-good">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>
+            All teams aligned on a single, intuitive platform
+          </li>
+          <li class="li-good">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>
+            Automated commission calculation — instant, accurate, trusted
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SOLUTION — 3-in-1
+============================================================ -->
+<section id="solution" class="gbg">
+  <div class="sol-in">
+    <div class="sol-hd rv on">
+      <h2 class="st">One platform. <span class="acc">Three engines.</span></h2>
+      <p class="ss">Say My Brand is a fully integrated ecosystem: a web platform for your team, a mobile app for your ambassadors, and a personalized boutique for every sale.</p>
+    </div>
+
+    <div class="bento">
+      <!-- Web Platform — span 2 -->
+      <div class="bc bc-span2 rv on">
+        <div class="bc-body">
+          <div class="bc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </div>
+          <h3 class="bc-t">Web Platform — Command Center for Your Brand</h3>
+          <p class="bc-d">Recruit, manage, and analyze your entire ambassador network from one dashboard. Create campaigns, automate commissions, and get real-time insights into what's driving revenue.</p>
+        </div>
+        <div class="bc-img">
+          <img src="assets/Group-1000002309-1024x519.png" alt="Say My Brand Web Platform">
+        </div>
+      </div>
+
+      <!-- Mobile App -->
+      <div class="bc rv d1 on">
+        <div class="bc-body">
+          <div class="bc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </div>
+          <h3 class="bc-t">Mobile App — Your Brand in Every Pocket</h3>
+          <p class="bc-d">Ambassadors access their dashboard, track commissions, and promote your products from a beautiful, fully-branded iOS &amp; Android app.</p>
+        </div>
+        <div class="bc-img" style="overflow:hidden;max-height:280px;">
+          <img src="assets/img-app-mobile-1.png" alt="Say My Brand Mobile App" style="object-fit:cover;object-position:top;height:280px;width:100%">
+        </div>
+      </div>
+
+      <!-- Ambassador Boutique — 2-column split (FIX) -->
+      <div class="bc bc-span2 bc-split rv d2 on">
+        <div class="bc-body">
+          <div class="bc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 01-8 0"></path></svg>
+          </div>
+          <h3 class="bc-t">Ambassador Boutique — A Storefront for Every Ambassador</h3>
+          <p class="bc-d">Every ambassador gets a personalized, fully-branded boutique to share with their audience. Every purchase is attributed, every commission is tracked, every click is measured.</p>
+          <a href="mailto:contact@saymybrand.com" class="btn btn-ghost" style="margin-top:1.5rem;width:fit-content">Learn More</a>
+        </div>
+        <div class="bc-img">
+          <img src="assets/Group-1000002215.png" alt="Ambassador Boutique">
+        </div>
+      </div>
+
+      <!-- Stat card -->
+      <div class="bc rv d3 on" style="display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem">
+        <div>
+          <div class="bc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          </div>
+          <h3 class="bc-t">End-to-End Attribution</h3>
+          <p class="bc-d">Every touchpoint, from ambassador post to final checkout, is tracked and attributed. Know your exact ROI per ambassador, per campaign.</p>
+        </div>
+        <div style="margin-top:2rem">
+          <div class="bc-stat">300%</div>
+          <div class="bc-stat-l">Average ROI increase</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURES BENTO
+============================================================ -->
+<section id="features">
+  <div class="feat-in">
+    <div class="feat-hd rv on">
+      <h2 class="st st-dark">Everything you need to <span class="acc">win over</span> your ambassadors.</h2>
+      <p class="ss ss-dark" style="max-width:560px;margin:1rem auto 0">Six features built specifically to recruit, retain, and grow an ambassador program that drives measurable revenue.</p>
+    </div>
+
+    <div class="feat-grid">
+      <!-- Wide card: Experience -->
+      <div class="fc fc-wide rv on">
+        <div>
+          <div class="fc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></path></svg>
+          </div>
+          <h3 class="fc-t">Experience</h3>
+          <p class="fc-d">Give every ambassador a fully branded app and a personalized storefront on your website. Your identity, your universe — a seamless experience that keeps ambassadors proud to represent your brand.</p>
+        </div>
+        <div class="fc-img">
+          <img src="assets/img1-platform.png" alt="Ambassador Experience">
+        </div>
+      </div>
+
+      <!-- Retention -->
+      <div class="fc fc-30 rv d1 on">
+        <div class="fc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+        </div>
+        <div class="fc-big">Stay.</div>
+        <div class="fc-bigl">Retention</div>
+        <p class="fc-d" style="margin-top:.75rem">Custom commission structures, fixed performance bonuses, and tracking via links or promo codes — built to keep ambassadors active and committed long-term.</p>
+      </div>
+
+      <!-- Motivation -->
+      <div class="fc fc-25 rv d1 on">
+        <div class="fc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </div>
+        <h3 class="fc-t">Motivation</h3>
+        <p class="fc-d">Flexible commission tiers, product seeding, and exclusive event invitations. Give ambassadors real reasons to act — and the rewards to show for it.</p>
+      </div>
+
+      <!-- Simplicity -->
+      <div class="fc fc-25 rv d2 on">
+        <div class="fc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <h3 class="fc-t">Simplicity</h3>
+        <p class="fc-d">An intuitive app, a Chrome extension for effortless content sharing, and a wide feature set that's easy for any ambassador to master — no training required.</p>
+      </div>
+
+      <!-- Segmentation -->
+      <div class="fc fc-25 rv d2 on">
+        <div class="fc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+        </div>
+        <h3 class="fc-t">Segmentation</h3>
+        <p class="fc-d">Create unlimited ambassador segments and send targeted push notifications or campaigns to exactly the right group — at the right moment.</p>
+      </div>
+
+      <!-- Transparence -->
+      <div class="fc fc-25 rv d3 on">
+        <div class="fc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        </div>
+        <h3 class="fc-t">Transparence</h3>
+        <p class="fc-d">Detailed analytics on clicks, sales, revenue, and bonuses. One-click payment requests and full invoice history — complete transparency builds trust on both sides.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     INTEGRATIONS
+============================================================ -->
+<section id="integrations" class="gbg">
+  <div class="int-in">
+    <div class="int-hd rv on">
+      <h2 class="st">Works with the tools<br>your brand <span class="acc">already uses.</span></h2>
+      <p class="ss" style="max-width:520px;margin:1rem auto 0">Say My Brand connects seamlessly to your e-commerce stack, social channels, and payment infrastructure — no custom dev required.</p>
+    </div>
+
+    <div class="int-scroll-wrap rv d1 on">
+      <div class="int-scroll-row int-scroll-row-1">
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/shopify" alt="Shopify"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/woocommerce" alt="WooCommerce"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/prestashop" alt="PrestaShop"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/bigcommerce" alt="BigCommerce"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/wix" alt="Wix"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/stripe" alt="Stripe"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/paypal" alt="PayPal"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/shopify" alt="Shopify"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/woocommerce" alt="WooCommerce"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/prestashop" alt="PrestaShop"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/bigcommerce" alt="BigCommerce"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/wix" alt="Wix"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/stripe" alt="Stripe"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/paypal" alt="PayPal"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/shopify" alt="Shopify"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/woocommerce" alt="WooCommerce"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/prestashop" alt="PrestaShop"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/bigcommerce" alt="BigCommerce"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/wix" alt="Wix"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/stripe" alt="Stripe"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/paypal" alt="PayPal"></div>
+      </div>
+      <div class="int-scroll-row int-scroll-row-2">
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/instagram" alt="Instagram"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/tiktok" alt="TikTok"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/youtube" alt="YouTube"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/facebook" alt="Facebook"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/pinterest" alt="Pinterest"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/x" alt="X"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/snapchat" alt="Snapchat"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/instagram" alt="Instagram"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/tiktok" alt="TikTok"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/youtube" alt="YouTube"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/facebook" alt="Facebook"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/pinterest" alt="Pinterest"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/x" alt="X"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/snapchat" alt="Snapchat"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/instagram" alt="Instagram"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/tiktok" alt="TikTok"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/youtube" alt="YouTube"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/facebook" alt="Facebook"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/pinterest" alt="Pinterest"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/x" alt="X"></div>
+        <div class="int-icon"><img src="https://cdn.simpleicons.org/snapchat" alt="Snapchat"></div>
+      </div>
+      <div class="int-fade-l"></div>
+      <div class="int-fade-r"></div>
+    </div>
+
+    <div class="int-note rv d2 on">
+      Don't see your stack? <a href="contact.html">Contact us</a> — we integrate via API with any platform.
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+============================================================ -->
+<section id="testi" class="gbg">
+  <div class="tes-in">
+    <div class="tes-hd rv on">
+      <h2 class="st">Brands that chose to <span class="acc">grow differently.</span></h2>
+    </div>
+
+    <div class="tes-grid">
+      <div class="tc rv on">
+        <div class="tc-stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+        <p class="tc-q">"Say My Brand transformed how we manage our ambassador community. Our team saves hours every week, and ambassador engagement has never been higher. The ROI visibility alone was worth switching."</p>
+        <div class="tc-auth">
+          <div class="tc-av">SK</div>
+          <div><div class="tc-n">Sarah K.</div><div class="tc-r">Marketing Director, Fashion Brand</div></div>
+        </div>
+      </div>
+
+      <div class="tc rv d1 on">
+        <div class="tc-stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+        <p class="tc-q">"The ambassador boutique feature doubled our conversion rate in the first month. Our ambassadors love having their own branded storefront — it makes sharing so much more compelling."</p>
+        <div class="tc-auth">
+          <div class="tc-av">ML</div>
+          <div><div class="tc-n">Marc L.</div><div class="tc-r">E-commerce Manager, Cosmetics Brand</div></div>
+        </div>
+      </div>
+
+      <div class="tc rv d2 on">
+        <div class="tc-stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </div>
+        <p class="tc-q">"Finally a platform that both my marketing team and my ambassadors love. Onboarding was fast, support is excellent, and the results speak for themselves — 3x ROI in our first quarter."</p>
+        <div class="tc-auth">
+          <div class="tc-av">NT</div>
+          <div><div class="tc-n">Nadia T.</div><div class="tc-r">Brand Manager, Lifestyle Brand</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+============================================================ -->
+<section id="faq">
+  <div class="faq-in">
+    <div class="faq-hd rv on">
+      <h2 class="st st-dark">Common <span class="acc">questions,</span><br>honest answers.</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="fq rv on">
+        <button class="fq-q" aria-expanded="false">
+          How long does it take to set up Say My Brand?
+          <span class="fq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+        </button>
+        <div class="fq-a"><div class="fq-a-inner">Most brands are live within a few days. Our onboarding team handles the technical setup — branded app configuration, storefront integration, and ambassador import — so your team can focus on strategy, not logistics.</div></div>
+      </div>
+      <div class="fq rv d1 on">
+        <button class="fq-q" aria-expanded="false">
+          Can I fully brand the ambassador app with my identity?
+          <span class="fq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+        </button>
+        <div class="fq-a"><div class="fq-a-inner">Yes. The ambassador app and the storefront are 100% white-label. Your logo, your colors, your name — ambassadors interact with your brand, not ours. This is a core part of the Experience feature.</div></div>
+      </div>
+      <div class="fq rv d1 on">
+        <button class="fq-q" aria-expanded="false">
+          How does commission tracking work?
+          <span class="fq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+        </button>
+        <div class="fq-a"><div class="fq-a-inner">Each ambassador gets a unique tracking link and/or promo code. Every click and purchase is attributed automatically. You can set fixed fees, percentage-based commissions, or hybrid structures — and ambassadors can request payment in one click.</div></div>
+      </div>
+      <div class="fq rv d2 on">
+        <button class="fq-q" aria-expanded="false">
+          Is Say My Brand compatible with Shopify and WooCommerce?
+          <span class="fq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+        </button>
+        <div class="fq-a"><div class="fq-a-inner">Yes. We integrate natively with Shopify and WooCommerce, and connect to PrestaShop, Magento, and custom platforms via API. Your product catalog, order data, and sales attribution sync automatically.</div></div>
+      </div>
+      <div class="fq rv d2 on">
+        <button class="fq-q" aria-expanded="false">
+          What types of promotions can ambassadors use?
+          <span class="fq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+        </button>
+        <div class="fq-a"><div class="fq-a-inner">Ambassadors can share their unique tracking link, a personal promo code, or their branded boutique storefront. All three methods are fully tracked and attributed back to the individual ambassador in real time.</div></div>
+      </div>
+      <div class="fq rv d3 on">
+        <button class="fq-q" aria-expanded="false">
+          Can I see a demo before committing?
+          <span class="fq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+        </button>
+        <div class="fq-a"><div class="fq-a-inner">Absolutely. Book a personalized demo and we'll walk you through the platform live — showing how it fits your specific ambassador program, team size, and e-commerce setup. No commitment required.</div></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:3.5rem" class="rv d3 on">
+      <a href="contact.html" class="btn btn-ghost-dark btn-lg">Still have questions? Contact us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRICING
+============================================================ -->
+<section id="pricing" class="gbg">
+  <div class="pr-in">
+    <div class="pr-hd rv on">
+      <h2 class="st">A plan for every <span class="acc">stage</span> of growth.</h2>
+      <p class="ss" style="max-width:540px;margin:1rem auto 0">From emerging brands to global programs. Contact us for tailored pricing that fits your ambassador network.</p>
+    </div>
+
+    <div class="pr-grid">
+      <div class="pc rv on">
+        <div class="pc-tier">Starter</div>
+        <div class="pc-name">Launch</div>
+        <div class="pc-desc">For emerging brands building their first ambassador community and driving initial growth.</div>
+        <ul class="pc-list">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Up to 50 ambassadors</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Ambassador CRM &amp; onboarding</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Branded mobile app</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Campaign management (3 active)</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Basic analytics dashboard</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg><span style="color:rgba(255,255,255,.28)">Ambassador boutique</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg><span style="color:rgba(255,255,255,.28)">Advanced attribution</span></li>
+        </ul>
+        <a href="mailto:contact@saymybrand.com" class="btn btn-ghost" style="width:100%;justify-content:center">Contact for Pricing</a>
+      </div>
+
+      <div class="pc pc-feat rv d1 on">
+        <div class="pc-badge">Most Popular</div>
+        <div class="pc-tier">Growth</div>
+        <div class="pc-name">Scale</div>
+        <div class="pc-desc">For brands ready to make ambassador marketing their primary growth channel with full attribution and automation.</div>
+        <ul class="pc-list">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Up to 500 ambassadors</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Full CRM + loyalty system</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Branded mobile app</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Unlimited campaigns</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Ambassador boutique per member</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Advanced attribution &amp; analytics</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Automated commission payouts</li>
+        </ul>
+        <a href="mailto:contact@saymybrand.com" class="btn btn-lime" style="width:100%;justify-content:center">Contact for Pricing</a>
+      </div>
+
+      <div class="pc rv d2 on">
+        <div class="pc-tier">Enterprise</div>
+        <div class="pc-name">Dominate</div>
+        <div class="pc-desc">For global brands and multi-market programs that require custom infrastructure, SLAs, and dedicated support.</div>
+        <ul class="pc-list">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Unlimited ambassadors</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Custom platform branding</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Multi-market &amp; multi-language</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Dedicated customer success manager</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>API access &amp; custom integrations</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>Custom SLA &amp; uptime guarantee</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ccff00" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>White-glove onboarding</li>
+        </ul>
+        <a href="mailto:contact@saymybrand.com" class="btn btn-ghost" style="width:100%;justify-content:center">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINAL CTA
+============================================================ -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-in">
+    <h2 class="cta-h rv d1 on">
+      Turn your community<br>into a <span class="acc">sales force.</span>
+    </h2>
+    <p class="cta-s rv d2 on">
+      Join 100+ brands already growing through their ambassadors. Book a demo and see what Say My Brand can do for your program.
+    </p>
+    <div class="cta-acts rv d3 on">
+      <a href="mailto:contact@saymybrand.com" class="btn btn-lime btn-lg">
+        Book a Demo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+      </a>
+      <a href="contact.html" class="btn btn-ghost btn-lg">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="ft-ghost">SAY MY BRAND</div>
+  <div class="ft-in">
+    <div class="ft-top">
+      <div>
+        <div class="ft-logo">
+          <img src="assets/footer-logo.png" alt="Say My Brand"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span style="display:none;font-family:var(--font-d);font-weight:900;font-size:1.1rem;letter-spacing:-.02em;color:var(--lime)">SAY MY BRAND</span>
+        </div>
+        <p class="ft-tag">The all-in-one platform to recruit, activate, and measure your brand ambassadors. Turn your community into your best sales channel.</p>
+      </div>
+
+      <div>
+        <div class="ft-col-t">Platform</div>
+        <ul class="ft-links">
+          <li><a href="#solution">Web Platform</a></li>
+          <li><a href="#solution">Mobile App</a></li>
+          <li><a href="#solution">Ambassador Boutique</a></li>
+          <li><a href="#features">Features</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="ft-col-t">Company</div>
+        <ul class="ft-links">
+          <li><a href="mailto:contact@saymybrand.com">About</a></li>
+          <li><a href="mailto:contact@saymybrand.com">Careers</a></li>
+          <li><a href="mailto:contact@saymybrand.com">Press</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="ft-col-t">Resources</div>
+        <ul class="ft-links">
+          <li><a href="mailto:contact@saymybrand.com">Documentation</a></li>
+          <li><a href="mailto:contact@saymybrand.com">Blog</a></li>
+          <li><a href="mailto:contact@saymybrand.com">Case Studies</a></li>
+          <li><a href="mailto:contact@saymybrand.com">Book Demo</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ft-bot">
+      <div class="ft-legal">&copy; 2025 Say My Brand. All rights reserved.</div>
+      <div class="ft-soc">
+        <a href="mailto:contact@saymybrand.com" class="soc-a" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg>
+        </a>
+        <a href="mailto:contact@saymybrand.com" class="soc-a" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a href="mailto:contact@saymybrand.com" class="soc-a" aria-label="Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.213 5.567zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /.pw -->
+
+<script>
+  // Scroll progress
+  const sp = document.getElementById('sp');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    sp.style.width = pct + '%';
+  }, { passive: true });
+
+  // Reveal on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.fq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const fq = btn.closest('.fq');
+      const isOpen = fq.classList.contains('open');
+      document.querySelectorAll('.fq').forEach(f => f.classList.remove('open'));
+      document.querySelectorAll('.fq-q').forEach(b => b.setAttribute('aria-expanded','false'));
+      if (!isOpen) { fq.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+
+  // Typewriter (no sparkles)
+  (function () {
+    const WORDS = ['Ambassadors', 'Influencers', 'Advocates', 'Creators', 'Partners'];
+    const wordEl = document.getElementById('typed-word');
+    if (!wordEl) return;
+    let wIdx = 0, cIdx = WORDS[0].length, deleting = false;
+    function tick() {
+      const word = WORDS[wIdx];
+      if (deleting) {
+        wordEl.textContent = word.slice(0, --cIdx);
+        if (cIdx === 0) { deleting = false; wIdx = (wIdx + 1) % WORDS.length; setTimeout(tick, 350); return; }
+        setTimeout(tick, 52);
+      } else {
+        wordEl.textContent = word.slice(0, ++cIdx);
+        if (cIdx === word.length) { deleting = true; setTimeout(tick, 1900); return; }
+        setTimeout(tick, 100);
+      }
+    }
+    setTimeout(() => { deleting = true; tick(); }, 2200);
+  })();
+</script>
+
+</body>
+</html>
